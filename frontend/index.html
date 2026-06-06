@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JBDL9 E-Wallet Frontend</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>JBDL9 E-Wallet Frontend</h1>
+      <p>Use this UI to interact with the backend services.</p>
+      <div class="status">
+        <strong>Token:</strong> <span id="auth-token">Not logged in</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>1. Register / Send OTP</h2>
+        <form id="register-form">
+          <div class="field"><label>Name</label><input name="name" required /></div>
+          <div class="field"><label>Email</label><input name="email" type="email" required /></div>
+          <div class="field"><label>Password</label><input name="password" type="password" required /></div>
+          <div class="field"><label>Mobile No</label><input name="mobileNo" required /></div>
+          <div class="field"><label>DOB</label><input name="dob" placeholder="dd/mm/yyyy" required /></div>
+          <div class="field"><label>User Identifier</label><select name="userIdentifier">
+              <option value="AADHAAR_CARD">AADHAAR_CARD</option>
+              <option value="VOTER_ID">VOTER_ID</option>
+            </select></div>
+          <div class="field"><label>Identifier Value</label><input name="userIdentifierValue" required /></div>
+          <button type="submit">Register</button>
+        </form>
+        <pre id="register-result"></pre>
+      </section>
+
+      <section class="card">
+        <h2>2. Validate OTP</h2>
+        <form id="otp-form">
+          <div class="field"><label>Email</label><input name="email" type="email" required /></div>
+          <div class="field"><label>OTP</label><input name="otp" required /></div>
+          <button type="submit">Validate OTP</button>
+        </form>
+        <pre id="otp-result"></pre>
+      </section>
+
+      <section class="card">
+        <h2>3. Login</h2>
+        <form id="login-form">
+          <div class="field"><label>Username (mobile no)</label><input name="username" required /></div>
+          <div class="field"><label>Password</label><input name="password" type="password" required /></div>
+          <button type="submit">Login</button>
+        </form>
+        <pre id="login-result"></pre>
+      </section>
+
+      <section class="card">
+        <h2>4. Wallet & Transactions</h2>
+        <button id="get-balance" class="wide">Get Wallet Balance</button>
+        <pre id="balance-result"></pre>
+
+        <form id="transaction-form">
+          <div class="field"><label>Amount</label><input name="amount" type="number" step="0.01" required /></div>
+          <div class="field"><label>Purpose</label><input name="purpose" required /></div>
+          <div class="field"><label>Receiver</label><input name="receiver" required /></div>
+          <button type="submit">Initiate Transaction</button>
+        </form>
+        <pre id="txn-result"></pre>
+
+        <button id="get-history" class="wide">Get Transaction History</button>
+        <pre id="history-result"></pre>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

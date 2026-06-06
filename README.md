@@ -52,3 +52,15 @@ curl --location 'http://localhost:8084/txn-service/get/transaction/history' \
 curl --location 'http://localhost:8083/wallet-service/get/balance' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4ODkwMjM3Njg3IiwiaWF0IjoxNzYxMzc4MDIwLCJleHAiOjE3NjEzNzg2MjAsInJvbGUiOiJOT1JNQUwifQ.-1K_uIECwq803o4S8TtY4pwGuH-AEwSI273kSmOtp3M' \
 --header 'Cookie: Cookie_1=value'
+
+## Frontend UI
+
+A simple browser UI is available in `frontend/index.html`.
+Open that file in your browser after starting the backend services:
+
+1. Start `OnboardingService` on port `8081`
+2. Start `WalletService` on port `8083`
+3. Start `TransactionService` on port `8084`
+4. Open `frontend/index.html`
+
+If you use VS Code, a Live Server extension will make it easier to open the page with a local URL.
