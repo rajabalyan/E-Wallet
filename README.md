@@ -23,12 +23,16 @@ This will start:
 
 ## Environment variables
 
-The repo includes a `.env` file with default local values. Update it before deployment with your real credentials.
+Create a private `.env` file locally from `.env.example` and fill in your own values. Do not commit this file to Git.
 
 ```bash
 cp .env.example .env
-# or use the default .env already created in the repo
 ```
+
+Set your own values for:
+- MySQL username/password
+- Gmail app password
+- any other service secrets
 
 ## Build and run services
 
@@ -40,7 +44,7 @@ mvn clean install
 cd ..
 ```
 
-Then build the services:
+Then build and run the services:
 
 ```bash
 cd OnboardingService && mvn clean package && java -jar target/OnboardingService-0.0.1-SNAPSHOT.jar
@@ -60,6 +64,6 @@ curl http://localhost:8084/actuator/health
 
 ## Notes
 
-- Do not commit the real `.env` file to source control.
+- Keep `.env` local and private.
 - Use a Gmail app password for `MAIL_PASSWORD` instead of your normal Gmail password.
 - For production, replace local defaults with secure secrets and deploy behind TLS.
