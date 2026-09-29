@@ -1,66 +1,65 @@
 # JBDL9_E-Wallet
 
-# Onboarding Curl:
-curl --location 'http://localhost:8081/onboarding-service/create/user' \
---header 'Content-Type: application/json' \
---header 'Cookie: Cookie_1=value' \
---data-raw '{
-    "name": "Aakash",
-    "email": "robinsingh1712@gmail.com",
-    "password": "123456",
-    "mobileNo": "8890237687",
-    "dob": "14/08/1997",
-    "userIdentifier": "AADHAAR_CARD",
-    "userIdentifierValue": "7373673636367222"
-}'
+This project is a Spring Boot microservice-based e-wallet application with:
+- OnboardingService
+- WalletService
+- TransactionService
+- NotificationService
+- Shared CommonService
 
-# Validate OTP Curl
-curl --location 'http://localhost:8081/onboarding-service/validate/otp' \
---header 'Content-Type: application/json' \
---header 'Cookie: Cookie_1=value' \
---data-raw '{
-    "otp": "320119",
-    "email": "robinsingh1712@gmail.com"
-}'
+## Local prerequisite stack
 
-# User Login Curl:
-curl --location 'http://localhost:8081/onboarding-service/user/login' \
---header 'Content-Type: application/json' \
---header 'Cookie: Cookie_1=value' \
---data '{
-    "username": "8890237687",
-    "password": "123456"
-}'
+The app depends on MySQL, Redis, and Kafka. You can start them locally with Docker Compose:
 
-# Initiate Transaction Curl:
-curl --location 'http://localhost:8084/txn-service/initiate/transaction' \
---header 'Content-Type: application/json' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5NzE3ODAzNDc5IiwiaWF0IjoxNzYxMzc2MTQ2LCJleHAiOjE3NjEzNzY3NDYsInJvbGUiOiJOT1JNQUwifQ.P92JToVsxcdu_qMKVKGwZIAuN76Rp_5kx174XYTkhr4' \
---header 'Cookie: Cookie_1=value' \
---data '{
-    "amount": 1100.0,
-    "purpose": "Dummy Transfer",
-    "receiver": "8890237687"
-}'
+```bash
+docker compose up -d
+```
 
-# Transaction History Curl
-curl --location 'http://localhost:8084/txn-service/get/transaction/history' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4ODkwMjM3Njg3IiwiaWF0IjoxNzYxMzc3MzQxLCJleHAiOjE3NjEzNzc5NDEsInJvbGUiOiJOT1JNQUwifQ.we23w_H7CyyrRrXTEvbF7CJMGtluCeJ3zzsUmWwfKFc' \
---header 'Cookie: Cookie_1=value'
+This will start:
+- MySQL on `localhost:3306`
+- Redis on `localhost:6379`
+- Zookeeper on `localhost:2181`
+- Kafka on `localhost:9092`
 
-# Wallet Balance API Curl:
-curl --location 'http://localhost:8083/wallet-service/get/balance' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4ODkwMjM3Njg3IiwiaWF0IjoxNzYxMzc4MDIwLCJleHAiOjE3NjEzNzg2MjAsInJvbGUiOiJOT1JNQUwifQ.-1K_uIECwq803o4S8TtY4pwGuH-AEwSI273kSmOtp3M' \
---header 'Cookie: Cookie_1=value'
+## Environment variables
 
-## Frontend UI
+The repo includes a `.env` file with default local values. Update it before deployment with your real credentials.
 
-A simple browser UI is available in `frontend/index.html`.
-Open that file in your browser after starting the backend services:
+```bash
+cp .env.example .env
+# or use the default .env already created in the repo
+```
 
-1. Start `OnboardingService` on port `8081`
-2. Start `WalletService` on port `8083`
-3. Start `TransactionService` on port `8084`
-4. Open `frontend/index.html`
+## Build and run services
 
-If you use VS Code, a Live Server extension will make it easier to open the page with a local URL.
+Build the shared library first:
+
+```bash
+cd CommonService
+mvn clean install
+cd ..
+```
+
+Then build the services:
+
+```bash
+cd OnboardingService && mvn clean package && java -jar target/OnboardingService-0.0.1-SNAPSHOT.jar
+cd ../WalletService && mvn clean package && java -jar target/WalletService-0.0.1-SNAPSHOT.jar
+cd ../TransactionService && mvn clean package && java -jar target/TransactionService-0.0.1-SNAPSHOT.jar
+cd ../NotificationService && mvn clean package && java -jar target/NotificationService-0.0.1-SNAPSHOT.jar
+```
+
+## Health checks
+
+```bash
+curl http://localhost:8081/actuator/health
+curl http://localhost:8082/actuator/health
+curl http://localhost:8083/actuator/health
+curl http://localhost:8084/actuator/health
+```
+
+## Notes
+
+- Do not commit the real `.env` file to source control.
+- Use a Gmail app password for `MAIL_PASSWORD` instead of your normal Gmail password.
+- For production, replace local defaults with secure secrets and deploy behind TLS.
