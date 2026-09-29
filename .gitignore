@@ -1,0 +1,80 @@
+# IDE
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+*~
+.DS_Store
+*.class
+
+# Build
+target/
+build/
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+
+# Maven
+.mvn/
+mvnw
+mvnw.cmd
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+
+# Gradle
+.gradle/
+gradle/
+
+# Spring Boot
+application*.properties
+application*.yml
+!application.properties
+!application.yml
+
+# Sensitive Data
+*.key
+*.pem
+*.p12
+*.keystore
+*.jks
+secrets/
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+
+# System
+.classpath
+.project
+.settings/
+.metadata/
+
+# Runtime data
+pids/
+*.seed
+*.pid.lock
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node (for frontend)
+node_modules/
+dist/
+npm-debug.log
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE specific
+*.sublime-project
+*.sublime-workspace
